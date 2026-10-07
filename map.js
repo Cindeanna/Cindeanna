@@ -8,16 +8,30 @@ L.tileLayer(
 
 //buffer
 function createFloodBuffer(){
-  var riverPoint = turf.point([-97.9384, 29.8884]);
-  var floodBuffer = turf.buffer(riverPoint, 500, {
+  var riverLine = turf.lineString([
+    [-97.9338, 29.8928],
+    [-97.9356, 29.8898],
+    [-97.9380, 29.8875],
+    [-97.9410, 29.8850],
+    [-97.9445, 29.8827],
+    [-97.9480, 29.8808],
+    [-97.9520, 29.8785],
+  ]);
+  var floodBuffer = turf.buffer(riverLine, 500, {
     units: 'feet'
   });
-  L.marker([29.8884, -97.9384])
-    .addTo(map)
-    .bindPopup("River Location");
 
-  L.geoJSON(floodBuffer)
-    .addTo(map);
+  L.geoJSON(riverLine, {
+    style: {
+      weight: 4
+    }
+  }).addTo(map);
+  L.geoJSON(floodBuffer, {
+    style: {
+      weight: 2,
+      fillOpacity: 0.3
+    }
+  }).addTo(map);
 }
 
 createFloodBuffer();
