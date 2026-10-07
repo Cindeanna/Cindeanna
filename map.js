@@ -5,3 +5,19 @@ L.tileLayer(
     attribution: '&copy; ' + mapLink + ' Contributors',
     maxZoom: 18,
 }).addTo(map);
+
+//buffer
+function createFloodBuffer(){
+  var riverPoint = turf.point([-97.9384, 29.8884]);
+  var floodBuffer = turf.buffer(riverPoint, 500, {
+    units: 'feet'
+  });
+  L.marker([29.8884, -97.9384])
+    .addTo(map)
+    .bindPopup("River Location");
+
+  L.geoJSON(floodBuffer)
+    .addTo(map);
+}
+
+createFloodBuffer();
