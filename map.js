@@ -7,31 +7,34 @@ L.tileLayer(
 }).addTo(map);
 
 //buffer
-function createFloodBuffer(){
+function createRiverBuffer(){
   var riverLine = turf.lineString([
-    [-97.9338, 29.8928],
-    [-97.9356, 29.8898],
-    [-97.9380, 29.8875],
-    [-97.9410, 29.8850],
-    [-97.9445, 29.8827],
-    [-97.9480, 29.8808],
-    [-97.9520, 29.8785],
+   [-97.9341, 29.8808],
+   [-97.9350, 29.8823],
+   [-97.9355, 29.8843],
+   [-97.9357, 29.8850],
+   [-97.9358, 29.8858],
   ]);
-  var floodBuffer = turf.buffer(riverLine, 500, {
+  var riverBuffer = turf.buffer(riverLine, 500, {
     units: 'feet'
   });
 
   L.geoJSON(riverLine, {
     style: {
+      color: 'blue',
       weight: 4
     }
   }).addTo(map);
-  L.geoJSON(floodBuffer, {
+  L.geoJSON(riverBuffer, {
     style: {
+      color: 'blue',
       weight: 2,
-      fillOpacity: 0.3
+      fillColor: 'blue',
+      fillOpacity: 0.25
     }
-  }).addTo(map);
+  }).addTo(map)
+
+    );
 }
 
-createFloodBuffer();
+createRiverBuffer();
