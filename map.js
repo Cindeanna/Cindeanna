@@ -49,3 +49,4 @@ function calculateRiverDistance() {
     document.getElementById("result").innerHTML =
         "Distance from the river: " + distance.toFixed(2) + " miles";
 }
+calculateRiverDistance();
