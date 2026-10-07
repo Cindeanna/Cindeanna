@@ -32,9 +32,20 @@ function createRiverBuffer(){
       fillColor: 'blue',
       fillOpacity: 0.25
     }
-  }).addTo(map)
-
-    );
+  }).addTo(map);
 }
-
 createRiverBuffer();
+//pointToLineDistance
+function calculateRiverDistance() {
+    var houseBuilding = turf.point([-97.9340, 29.8870]);
+    var river = turf.lineString([
+        [-97.9400, 29.8900],
+        [-97.9380, 29.8870],
+        [-97.9360, 29.8840]
+  ]);
+    var distance = turf.pointToLineDistance(houseBuilding, river, {
+      units: 'miles'
+    });
+    document.getElementById("result").innerHTML =
+        "Distance from the river: " + distance.toFixed(2) + " miles";
+}
