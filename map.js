@@ -33,7 +33,6 @@ function createRiverBuffer(){
       fillOpacity: 0.25
     }
   }).addTo(map);
-
 }
 
 createRiverBuffer();
