@@ -37,13 +37,13 @@ function createRiverBuffer(){
 createRiverBuffer();
 //pointToLineDistance
 function calculateRiverDistance() {
-    var house building = turf.point([-97.9340, 29.8870]);
+    var houseBuilding = turf.point([-97.9340, 29.8870]);
     var river = turf.lineString([
         [-97.9400, 29.8900],
         [-97.9380, 29.8870],
         [-97.9360, 29.8840]
   ]);
-    var distance = turf.pointToLineDistance(house building, river, {
+    var distance = turf.pointToLineDistance(houseBuilding, river, {
       units: 'miles'
     });
     document.getElementById("result").innerHTML =
