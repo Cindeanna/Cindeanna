@@ -32,9 +32,8 @@ function createRiverBuffer(){
       fillColor: 'blue',
       fillOpacity: 0.25
     }
-  }).addTo(map)
+  }).addTo(map);
 
-    );
 }
 
 createRiverBuffer();
