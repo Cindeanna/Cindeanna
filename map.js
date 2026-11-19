@@ -58,6 +58,7 @@ const locationStatus = document.getElementById("locationStatus");
 
 //User granting or denying access to location part
 locateBtn.addEventListener("click", function () {
+  if(!navigator.geolocation) {
   locationStatus.textContent =
     "Geolocation is not supported by your browser.";
   return;
