@@ -76,7 +76,7 @@ watchId = navigator.geolocation.watchPosition(
   showError,
   {
     enableHighAccuracy: true,
-    maximumAge: 0
+    maximumAge: 0,
     timeout: 15000
   }
 );
