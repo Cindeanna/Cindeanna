@@ -50,3 +50,77 @@ function calculateRiverDistance() {
         "Distance from the river: " + distance.toFixed(2) + " miles";
 }
 calculateRiverDistance();
+//Geolocation shi
+let locationMarker;
+let watchId = null;
+const locateBtn = document.getElementById("locateBtn");
+const locationStatus = document.getElementById("locationStatus");
+
+//User granting or denying access to location part
+locateBtn.addEventListener("click", function () {
+  locationStatus.textContent =
+    "Geolocation is not supported by your browser.";
+  return;
+}
+if (watchId !== null) {
+  navigator.geoloaction.clearWatch(WatchId);
+  watchId = null;
+  locateBtn.textContent = "Track My Location";
+  locationStatus.textContent = "Location tracking stopped.";
+  return;
+}
+locationStatus.textContent = "Finding your location...";
+watchId = navigator.geolocation.watchPosition(
+  showPosition,
+  showError,
+  {
+    enableHighAccuracy: true,
+    maximumAge: 0
+    timeout: 15000
+  }
+);
+  locateBtn.textContent = "Stop Tracking";
+});
+// how user location will be displayed (the lil circle)
+function showPosition(position) {
+  const latitude = position.coords.latitude;
+  const longtitude = position.coords.longitude;
+  const userLocation = [latitude, longitude];
+  if (!locationMarker) {
+    locationMarker = L.circleMarker(userLocation, {
+      radius: 8,
+      color: "white",
+      weight: 2,
+      fillColor: "blue",
+      fillOpacity: 1
+    }).addTo(map);
+  } else {
+      locationMarker.setLatLng(userLocation);
+  }
+  map.setView(userLocation, 15);
+  locationStatus.textContent =
+    "Location tracking is active.";
+  console.log("Latitude:", latitude);
+  console.log("Longitude:", longitude);
+}
+// location errors
+function showError(error) {
+  switch (error.code) {
+    case 1:
+      locationStatus.textContent =
+        "location unavailable.";
+      break;
+    case 3:
+      locationStatus.textContent =
+        "Location request timed out.";
+      break;
+    default:
+      locationStatus.textContent =
+        "An unknown error occurred.";
+  }
+  if (watchId !== null) {
+    navigator.geolocation.ClearWatch(watchId);
+    watchId = null;
+  }
+  locateBtn.textContent = "Track My Location";
+}
