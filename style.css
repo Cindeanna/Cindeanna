@@ -38,7 +38,7 @@ html, body, #map {
   text-decoration: none;
 }
 
-.dropdown-content a: hover {
+.dropdown-content a:hover {
   background-color: #ddd;
 }
 .about-us:hover .dropdown-content {
