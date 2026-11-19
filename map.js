@@ -6,6 +6,24 @@ L.tileLayer(
     maxZoom: 18,
 }).addTo(map);
 
+
+var floodFeatures = response.result.floodregions.map(zone => {
+
+    return {
+        type: "Feature",
+        properties: {
+            floodZone: zone.fld_zone,
+            id: zone.fld_ar_id
+        },
+        geometry: JSON.parse(zone.geojson)
+    };
+
+});
+
+var floodData = {
+    type: "FeatureCollection",
+    features: floodFeatures
+};
 //buffer
 function createRiverBuffer(){
   var riverLine = turf.lineString([
