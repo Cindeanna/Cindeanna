@@ -44,3 +44,29 @@ html, body, #map {
 .about-us:hover .dropdown-content {
   display: block;
 }
+/* Geolocation Button */
+#locateBtn {
+  position: absolute;
+  top:70px;
+  left: 10px;
+  z-index: 1000;
+  background-color: #173b4d;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#locateBtn: hover {
+  background-color: #28627b;
+}
+/* GPS location status*/
+#locationStatus {
+  position: absolute;
+  top: 120px;
+  left: 10px;
+  z-index: 1000;
+  background-color: white;
+  padding: 8px;
+  border-radius: 5px;
+}
