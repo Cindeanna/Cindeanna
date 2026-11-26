@@ -147,11 +147,26 @@ fetch("floodzones.geojson")
   .then(response => response.json())
   .then(data => {
     L.geoJSON(data, {
-      style: {
-        color: "#e67e22",
-        weight: 1,
-        fillColor: "#f39c12",
-        fillOpacity: 0.35
+      style: function(feature) {
+        const zone = feature.properties.FLD_ZONE;
+        const subtype = feature.properties.ZONE_SUBTY
+        let color = "#9ca3af";
+        let opacity = 0.25;
+
+        if (subtype === "FLOODWAY") ||
+            subtype === "ADMINISTRATIVE FLOODWAY") {
+        } else if (["A", "AE", "AO"].includes(zone)) {
+          color = "#eab308";
+        } else if (subtype === "AREA OF MINIMAL FLOOD HAZARD") {
+          opacity = 0;
+        }
+        return {
+          color: color,
+          weight: 1,
+          opacity: opacity === 0 ? 0 : 0.8,
+          fillColor: color,
+          fillOpacity: opacity
+        };
       }
     }).addTo(map);
   })
