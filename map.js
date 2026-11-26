@@ -103,6 +103,7 @@ function showPosition(position) {
     "Location tracking is active.";
   console.log("Latitude:", latitude);
   console.log("Longitude:", longitude);
+  checkFloodZone(latitude, longitude);
 }
 // location errors
 function showError(error) {
@@ -143,9 +144,11 @@ fetch("waterways.geojson")
   });
 
 //FEMA Flood Hazard Zones
+let floodZoneData = null;
 fetch("floodzones.geojson")
   .then(response => response.json())
   .then(data => {
+    floodZoneData = data;
     L.geoJSON(data, {
       style: function(feature) {
         const zone = feature.properties.FLD_ZONE;
@@ -176,3 +179,17 @@ fetch("floodzones.geojson")
   .catch(error => {
     console.error("Error loading flood zones:", error);
   });
+
+  // Point-in-Polygon Analysis
+  function checkFloodZone (latitude, longitude) {
+    if (!floodZoneData) {
+      return;
+    }
+    const userPoint = turf.point([longitude, latitude]);
+    const matchedZones = floodZoneData.features.filter(feature =>
+    turf.booleanPointInPolygon(userPoint, feature)
+  );
+  console.log("Flood zones:", matchedZones);
+  }
+  // note to self: turf.js uses [longitude, latitude] leaflet uses
+  // [latitude, longitude]
