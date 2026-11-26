@@ -85,7 +85,7 @@ watchId = navigator.geolocation.watchPosition(
 // how user location will be displayed (the lil circle)
 function showPosition(position) {
   const latitude = position.coords.latitude;
-  const longtitude = position.coords.longitude;
+  const longitude = position.coords.longitude;
   const userLocation = [latitude, longitude];
   if (!locationMarker) {
     locationMarker = L.circleMarker(userLocation, {
