@@ -155,7 +155,10 @@ fetch("floodzones.geojson")
 
         if (subtype === "FLOODWAY") ||
             subtype === "ADMINISTRATIVE FLOODWAY") {
+              color = "#991b1b";
         } else if (["A", "AE", "AO"].includes(zone)) {
+          color = "#ef4444";
+        } else if (subtype === "0.2 PCT ANNUAL CHANCE FLOOD HAZARD"){
           color = "#eab308";
         } else if (subtype === "AREA OF MINIMAL FLOOD HAZARD") {
           opacity = 0;
