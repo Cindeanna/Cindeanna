@@ -120,7 +120,7 @@ function showError(error) {
         "An unknown error occurred.";
   }
   if (watchId !== null) {
-    navigator.geolocation.ClearWatch(watchId);
+    navigator.geolocation.clearWatch(watchId);
     watchId = null;
   }
   locateBtn.textContent = "Track My Location";
@@ -130,13 +130,13 @@ function showError(error) {
 fetch("waterways.geojson")
   .then(response => response.json())
   .then(data => {
-    style: {
-      color: "#0077b6",
-      weight: 3,
-      opacity: 0.9
-
-    }
-  })
+    L.geoJSON(data, {
+      style: {
+        color: "#0077b6",
+        weight: 3,
+        opacity: 0.9
+      }
+    })
   .catch(error => {
     console.error("Error loading waterways:", error);
   });
