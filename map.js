@@ -85,7 +85,7 @@ watchId = navigator.geolocation.watchPosition(
 // how user location will be displayed (the lil circle)
 function showPosition(position) {
   const latitude = position.coords.latitude;
-  const longtitude = position.coords.longitude;
+  const longitude = position.coords.longitude;
   const userLocation = [latitude, longitude];
   if (!locationMarker) {
     locationMarker = L.circleMarker(userLocation, {
@@ -120,8 +120,41 @@ function showError(error) {
         "An unknown error occurred.";
   }
   if (watchId !== null) {
-    navigator.geolocation.ClearWatch(watchId);
+    navigator.geolocation.clearWatch(watchId);
     watchId = null;
   }
   locateBtn.textContent = "Track My Location";
 }
+
+//San Mo Waterways
+fetch("waterways.geojson")
+  .then(response => response.json())
+  .then(data => {
+    L.geoJSON(data, {
+      style: {
+        color: "#0077b6",
+        weight: 3,
+        opacity: 0.9
+      }
+    }).addTo(map);
+  })
+  .catch(error => {
+    console.error("Error loading waterways:", error);
+  });
+
+//FEMA Flood Hazard Zones
+fetch("floodzones.geojson")
+  .then(response => response.json())
+  .then(data => {
+    L.geoJSON(data, {
+      style: {
+        color: "#e67e22",
+        weight: 1,
+        fillColor: "#f39c12",
+        fillOpacity: 0.35
+      }
+    }).addTo(map);
+  })
+  .catch(error => {
+    console.error("Error loading flood zones:", error);
+  });
