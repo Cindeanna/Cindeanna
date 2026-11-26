@@ -125,3 +125,18 @@ function showError(error) {
   }
   locateBtn.textContent = "Track My Location";
 }
+
+//San Mo Waterways
+fetch("waterways.geojson")
+  .then(response => response.json())
+  .then(data => {
+    style: {
+      color: "#0077b6",
+      weight: 3,
+      opacity: 0.9
+
+    }
+  })
+  .catch(error => {
+    console.error("Error loading waterways:", error);
+  });
