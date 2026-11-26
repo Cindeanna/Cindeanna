@@ -137,6 +137,7 @@ fetch("waterways.geojson")
         opacity: 0.9
       }
     }).addTo(map);
+  })
   .catch(error => {
     console.error("Error loading waterways:", error);
   });
