@@ -153,7 +153,7 @@ fetch("floodzones.geojson")
         let color = "#9ca3af";
         let opacity = 0.25;
 
-        if (subtype === "FLOODWAY")
+        if (subtype === "FLOODWAY") ||
             subtype === "ADMINISTRATIVE FLOODWAY") {
               color = "#991b1b";
         } else if (["A", "AE", "AO"].includes(zone)) {
