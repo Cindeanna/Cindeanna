@@ -141,3 +141,20 @@ fetch("waterways.geojson")
   .catch(error => {
     console.error("Error loading waterways:", error);
   });
+
+//FEMA Flood Hazard Zones
+fetch("floodzones.geojson")
+  .then(response => response.json())
+  .then(data => {
+    L.geoJSON(data, {
+      style: {
+        color: "#e67e22",
+        weight: 1,
+        fillColor: "#f39c12",
+        fillOpacity: 0.35
+      }
+    }).addTo(map);
+  })
+  .catch(error => {
+    console.error("Error loading flood zones:", error);
+  });
