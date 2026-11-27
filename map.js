@@ -50,6 +50,7 @@ function calculateRiverDistance() {
         "Distance from the river: " + distance.toFixed(2) + " miles";
 }
 calculateRiverDistance();
+
 //Geolocation shi
 let locationMarker;
 let watchId = null;
@@ -158,3 +159,31 @@ fetch("floodzones.geojson")
   .catch(error => {
     console.error("Error loading flood zones:", error);
   });
+
+  // Roads
+  fetch("Roads.geojson")
+    .then(response => response.json())
+    .then(data => {
+      var roadsLayer = L.geoJSON(data, {
+        style: function(feature) {
+          return {
+          color: "#666666",
+          weight: 2,
+          opacity: 0.7
+        };
+      },
+      onEachFeature: function(feature, layer) {
+        var roadName = feature.properties.FULLSTREET || "Unnamed Road";
+        var roadType = feature.properties.ROAD_TYPE || "Unknown";
+        var speedLimit = feature.properties.SPEEDLIMIT || "Unknown";
+            layer.bindPopup(
+              "<b>Road:</b> " + roadName +
+              "<br><b>Road Type:</b>" + roadType +
+              "<br><b> Speed Limit:</b>" + speedLimit + "mph"
+            );
+          }
+      }).addTo(map);
+    })
+    .catch(error => {
+      console.error("Error loading roads:", error);
+    });
