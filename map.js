@@ -104,6 +104,7 @@ function showPosition(position) {
     "Location tracking is active.";
   console.log("Latitude:", latitude);
   console.log("Longitude:", longitude);
+  checkFloodZone(latitude, longitude);
 }
 // location errors
 function showError(error) {
@@ -144,15 +145,35 @@ fetch("waterways.geojson")
   });
 
 //FEMA Flood Hazard Zones
+let floodZoneData = null;
 fetch("floodzones.geojson")
   .then(response => response.json())
   .then(data => {
+    floodZoneData = data;
     L.geoJSON(data, {
-      style: {
-        color: "#e67e22",
-        weight: 1,
-        fillColor: "#f39c12",
-        fillOpacity: 0.35
+      style: function(feature) {
+        const zone = feature.properties.FLD_ZONE;
+        const subtype = feature.properties.ZONE_SUBTY
+        let color = "#9ca3af";
+        let opacity = 0.25;
+
+        if (subtype === "FLOODWAY" ||
+            subtype === "ADMINISTRATIVE FLOODWAY") {
+              color = "#991b1b";
+        } else if (["A", "AE", "AO"].includes(zone)) {
+          color = "#ef4444";
+        } else if (subtype === "0.2 PCT ANNUAL CHANCE FLOOD HAZARD"){
+          color = "#eab308";
+        } else if (subtype === "AREA OF MINIMAL FLOOD HAZARD") {
+          opacity = 0;
+        }
+        return {
+          color: color,
+          weight: 1,
+          opacity: opacity === 0 ? 0 : 0.8,
+          fillColor: color,
+          fillOpacity: opacity
+        };
       }
     }).addTo(map);
   })
@@ -160,6 +181,7 @@ fetch("floodzones.geojson")
     console.error("Error loading flood zones:", error);
   });
 
+<<<<<<< HEAD
   // Roads
   fetch("Roads.geojson")
     .then(response => response.json())
@@ -187,3 +209,18 @@ fetch("floodzones.geojson")
     .catch(error => {
       console.error("Error loading roads:", error);
     });
+=======
+  // Point-in-Polygon Analysis
+  function checkFloodZone (latitude, longitude) {
+    if (!floodZoneData) {
+      return;
+    }
+    const userPoint = turf.point([longitude, latitude]);
+    const matchedZones = floodZoneData.features.filter(feature =>
+    turf.booleanPointInPolygon(userPoint, feature)
+  );
+  console.log("Flood zones:", matchedZones);
+  }
+  // note to self: turf.js uses [longitude, latitude] leaflet uses
+  // [latitude, longitude]
+>>>>>>> 2922014270c1d947a5c6b38c824ae19d3ba952a3
