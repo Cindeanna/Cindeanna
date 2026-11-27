@@ -181,17 +181,21 @@ fetch("floodzones.geojson")
     console.error("Error loading flood zones:", error);
   });
 
-<<<<<<< HEAD
   // Roads
   fetch("Roads.geojson")
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Could not load Roads.geojson");
+      }
+      return response.json();
+    });
     .then(data => {
       var roadsLayer = L.geoJSON(data, {
         style: function(feature) {
           return {
-          color: "#666666",
-          weight: 2,
-          opacity: 0.7
+            color: "#666666",
+            weight: 2,
+            opacity: 0.7
         };
       },
       onEachFeature: function(feature, layer) {
@@ -209,18 +213,3 @@ fetch("floodzones.geojson")
     .catch(error => {
       console.error("Error loading roads:", error);
     });
-=======
-  // Point-in-Polygon Analysis
-  function checkFloodZone (latitude, longitude) {
-    if (!floodZoneData) {
-      return;
-    }
-    const userPoint = turf.point([longitude, latitude]);
-    const matchedZones = floodZoneData.features.filter(feature =>
-    turf.booleanPointInPolygon(userPoint, feature)
-  );
-  console.log("Flood zones:", matchedZones);
-  }
-  // note to self: turf.js uses [longitude, latitude] leaflet uses
-  // [latitude, longitude]
->>>>>>> 2922014270c1d947a5c6b38c824ae19d3ba952a3
