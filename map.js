@@ -183,16 +183,34 @@ fetch("floodzones.geojson")
 
   // Roads
   fetch("Roads.geojson")
-    .then(response => response.json ())
-    .then(data => {
-        L.geoJSON(data, {
-          style:{
-            color: "#666666",
-            weight: 2,
-            opacity: 0.6
-          }
-        })addTo(map);
-      })
-    .catch(error => {
-      console.error("Error loading roads:", error);
-    });
+   .then(response => {
+     if (!response.ok) {
+       throw new Error("Could not load Roads.geojson");
+     }
+     return response.json();
+   })
+   .then(data => {
+     var roadsLayer = L.geoJSON(data, {
+       style: function(feature) {
+         return {
+           color: "#666666",
+           weight: 2,
+           opacity: 0.7
+         };
+       },
+       onEachFeature: function(feature, layer) {
+         var roadName = feature.properties.FULLSTREET || "Unnamed Road";
+         var roadType = feature.properties.ROAD_TYPE || "Unknown";
+         var speedLimit = feature.properties.SPEEDLIMIT || "Unknown";
+
+         layer.bindPopup(
+           "<b>Road:</b> " + roadName +
+           "<br><b>Road Type:</b> " + roadType +
+           "<br><b>Speed Limit:</b> " + speedLimit + " mph"
+         );
+       }
+     }).addTo(map);
+   })
+   .catch(error => {
+     console.error("Error loading roads:", error);
+   });
