@@ -49,7 +49,7 @@ function calculateRiverDistance() {
     document.getElementById("result").innerHTML =
         "Distance from the river: " + distance.toFixed(2) + " miles";
 }
-calculateRiverDistance();
+//calculateRiverDistance();
 //Geolocation shi
 let locationMarker;
 let watchId = null;
