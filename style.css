@@ -71,7 +71,7 @@ h1 {
   border-radius: 5px;
   cursor: pointer;
 }
-#locateBtn: hover {
+#locateBtn:hover {
   background-color: #28627b;
 }
 /* GPS location status*/
